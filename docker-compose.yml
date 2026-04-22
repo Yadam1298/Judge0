@@ -4,9 +4,9 @@ services:
   db:
     image: postgres:16.2
     environment:
-      POSTGRES_USER: judge0
-      POSTGRES_PASSWORD: judge0
-      POSTGRES_DB: judge0
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
 
   redis:
     image: redis:7
@@ -18,16 +18,15 @@ services:
       - db
       - redis
     environment:
-      POSTGRES_HOST: db
-      POSTGRES_PORT: 5432
-      POSTGRES_DB: judge0
-      POSTGRES_USER: judge0
-      POSTGRES_PASSWORD: judge0
-      REDIS_HOST: redis
-      REDIS_PORT: 6379
-
+      POSTGRES_HOST: ${POSTGRES_HOST}
+      POSTGRES_PORT: ${POSTGRES_PORT}
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      REDIS_HOST: ${REDIS_HOST}
+      REDIS_PORT: ${REDIS_PORT}
     ports:
-      - '2358:2358'
+      - '${SERVER_PORT}:2358'
 
   worker:
     image: judge0/judge0:latest
@@ -38,11 +37,11 @@ services:
       - db
       - redis
     environment:
-      POSTGRES_HOST: db
-      POSTGRES_PORT: 5432
-      POSTGRES_DB: judge0
-      POSTGRES_USER: judge0
-      POSTGRES_PASSWORD: judge0
-      REDIS_HOST: redis
-      REDIS_PORT: 6379
-      COUNT: 2
+      POSTGRES_HOST: ${POSTGRES_HOST}
+      POSTGRES_PORT: ${POSTGRES_PORT}
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      REDIS_HOST: ${REDIS_HOST}
+      REDIS_PORT: ${REDIS_PORT}
+      COUNT: ${WORKER_COUNT}
